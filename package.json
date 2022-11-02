@@ -4,11 +4,12 @@
     "description": "See GitHub description",
     "main": "index.ts",
     "scripts": {
-        "test": "test",
         "build": "tsc",
         "start": "nodemon ./src/index",
         "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-        "lint": "eslint src/**"
+        "lint": "eslint src/**",
+        "jasmine": "jasmine",
+        "test": "npm run build && npm run jasmine"
     },
     "repository": {
         "type": "git",
@@ -22,11 +23,14 @@
     "homepage": "https://github.com/MatthewJJJ/image-processing-api-ud-fsJSnd-p1#readme",
     "devDependencies": {
         "@types/express": "^4.17.14",
+        "@types/jasmine": "^4.3.0",
         "@types/node": "^18.11.9",
         "@typescript-eslint/eslint-plugin": "^5.42.0",
         "@typescript-eslint/parser": "^5.42.0",
         "eslint": "^8.26.0",
         "eslint-config-prettier": "^8.5.0",
+        "jasmine": "^4.5.0",
+        "jasmine-spec-reporter": "^7.0.0",
         "nodemon": "^2.0.20",
         "prettier": "^2.7.1",
         "ts-node": "^10.9.1",
