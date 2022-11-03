@@ -4,13 +4,24 @@ import routes from './routes';
 const port = 3000;
 const app = express();
 
-const middle = [
-    (req: express.Request, res: express.Response, next: Function) => {
-        const log = req.protocol + '://' + req.get('host') + req.originalUrl;
-        console.log('INFO LOG:', log);
-        next();
-    },
-];
+const logger = (
+    req: express.Request,
+    res: express.Response,
+    next: Function
+) => {
+    const log = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log('INFO:', 'Route Executed:', log);
+
+    let parameters: { [x: string]: string }[] = [];
+    Object.keys(req.query).forEach((e) =>
+        parameters.push({ [e]: String(req.query[e]) })
+    );
+    console.log('INFO:', parameters);
+
+    next();
+};
+
+const middle = [logger];
 
 app.get('/', (req, res) => {
     res.send(
