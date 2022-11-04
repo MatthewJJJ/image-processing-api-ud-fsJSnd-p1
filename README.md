@@ -20,3 +20,9 @@ Message Endpoints for Build Validation:
 http://localhost:3000/
 
 http://localhost:3000/api/
+
+Images:
+
+All source images are in the /images/full directory
+
+All resized images will be generated in the /images/resized directory
