@@ -37,3 +37,5 @@ app.listen(port, () => {
         `Make a request to http://localhost:${port}/ to confirm it is working...`
     );
 });
+
+export default app;

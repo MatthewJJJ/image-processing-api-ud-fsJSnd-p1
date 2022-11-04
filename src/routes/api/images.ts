@@ -1,34 +1,55 @@
 import express from 'express';
 import { readdirSync } from 'fs';
 import sharp from 'sharp';
+import path from 'path';
 
 const images = express.Router();
 
 images.get('/', async (req, res) => {
-    let filename = String(req.query.filename);
-    let width = Number(req.query.width);
-    let height = Number(req.query.height);
+    let filename = req.query.filename ? String(req.query.filename) : null;
+    let width = req.query.width ? Number(req.query.width) : null;
+    let height = req.query.height ? Number(req.query.height) : null;
 
-    const fileNames = readdirSync(`${__dirname}/images/resized`);
+    let isValidInput = filename !== null && width !== null && height !== null;
+
+    console.log(path.resolve(__dirname, `../../../images/resized`));
+    const fileNames = readdirSync(
+        path.resolve(__dirname, `../../../images/resized`)
+    );
 
     let identifier = `${filename}${width}x${height}`;
-
-    if (fileNames.includes(identifier + '.jpg')) {
+    if (!isValidInput) {
+        res.send(
+            'No parameters given.  Please include a filename, width, and height...'
+        );
+    } else if (fileNames.includes(identifier + '.jpg')) {
         console.log('Retrieving cached image...');
-        res.sendFile(`${__dirname}/images/resized/${identifier}.jpg`);
+        res.sendFile(
+            path.resolve(__dirname, `../../../images/resized/${identifier}.jpg`)
+        );
     } else {
         let response = null;
 
         try {
-            response = await sharp(`${__dirname}/images/full/${filename}.jpg`)
+            response = await sharp(
+                path.resolve(__dirname, `../../../images/full/${filename}.jpg`)
+            )
                 .resize(width, height)
-                .toFile(`${__dirname}/images/resized/${identifier}.jpg`);
+                .toFile(
+                    path.resolve(
+                        __dirname,
+                        `../../../images/resized/${identifier}.jpg`
+                    )
+                );
         } catch (error) {
-            console.error(error);
+            console.error('ERROR LOG:', error);
+            res.send(`An unexpected error occurred... \n ${error}`);
         }
 
-        console.log(response);
-        res.sendFile(`${__dirname}/images/resized/${identifier}.jpg`);
+        console.log('INFO LOG:', response);
+        res.sendFile(
+            path.resolve(__dirname, `../../../images/resized/${identifier}.jpg`)
+        );
     }
 });
 
