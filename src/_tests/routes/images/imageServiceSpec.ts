@@ -2,7 +2,7 @@ import processImage from '../../../routes/api/imageService';
 
 describe('testing image service', () => {
     it('testing image service with valid input', async () => {
-        let response = await processImage(
+        const response = await processImage(
             'TestImage',
             200,
             200,

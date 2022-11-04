@@ -12,9 +12,9 @@ images.get('/', async (req, res) => {
 
     let isValidInput = filename !== null && width !== null && height !== null;
 
-    console.log(path.resolve(__dirname, `../../../images/resized`));
+    console.log(path.resolve(__dirname, '../../../images/resized'));
     const fileNames = readdirSync(
-        path.resolve(__dirname, `../../../images/resized`)
+        path.resolve(__dirname, '../../../images/resized')
     );
 
     let identifier = `${filename}${width}x${height}`;

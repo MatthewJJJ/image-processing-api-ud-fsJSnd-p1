@@ -38,14 +38,18 @@ describe('testing image endpoint', () => {
                 __dirname,
                 '../../../../images/resized/TestImage200x200.jpg'
             ),
-            () => {}
+            () => {
+                console.log('file deleted...');
+            }
         );
         unlink(
             path.resolve(
                 __dirname,
                 '../../../../images/resized/TestImage200x400.jpg'
             ),
-            () => {}
+            () => {
+                console.log('file deleted...');
+            }
         );
     });
 });
