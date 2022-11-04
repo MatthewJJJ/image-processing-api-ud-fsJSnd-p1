@@ -12,21 +12,24 @@ images.get('/', async (req, res) => {
     const fileNames = readdirSync(`${__dirname}/images/resized`);
 
     let identifier = `${filename}${width}x${height}`;
+
     if (fileNames.includes(identifier + '.jpg')) {
-        console.log('serving already resized file...');
+        console.log('Retrieving cached image...');
+        res.sendFile(`${__dirname}/images/resized/${identifier}.jpg`);
+    } else {
+        let response = null;
+
+        try {
+            response = await sharp(`${__dirname}/images/full/${filename}.jpg`)
+                .resize(width, height)
+                .toFile(`${__dirname}/images/resized/${identifier}.jpg`);
+        } catch (error) {
+            console.error(error);
+        }
+
+        console.log(response);
+        res.sendFile(`${__dirname}/images/resized/${identifier}.jpg`);
     }
-
-    let response = null;
-
-    try {
-        response = await sharp(`${__dirname}/images/full/${filename}.jpg`)
-            .resize(width, height)
-            .toFile(`${__dirname}/images/resized/${identifier}.jpg`);
-    } catch (error) {
-        console.error(error);
-    }
-
-    res.send(response);
 });
 
 export default images;
