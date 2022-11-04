@@ -1,7 +1,7 @@
 import express from 'express';
 import { readdirSync } from 'fs';
-import sharp from 'sharp';
 import path from 'path';
+import processImage from './imageService';
 
 const images = express.Router();
 
@@ -31,16 +31,12 @@ images.get('/', async (req, res) => {
         let response = null;
 
         try {
-            response = await sharp(
-                path.resolve(__dirname, `../../../images/full/${filename}.jpg`)
-            )
-                .resize(width, height)
-                .toFile(
-                    path.resolve(
-                        __dirname,
-                        `../../../images/resized/${identifier}.jpg`
-                    )
-                );
+            response = await processImage(
+                filename as string,
+                width as number,
+                height as number,
+                identifier
+            );
         } catch (error) {
             console.error('ERROR LOG:', error);
             res.send(`An unexpected error occurred... \n ${error}`);
