@@ -6,7 +6,14 @@ const processImage = async (
     width: number,
     height: number,
     id: string
-) => {
+): Promise<{
+    format: string;
+    width: number;
+    height: number;
+    channels: number;
+    premultiplied: boolean;
+    size: number;
+}> => {
     let response = await sharp(
         path.resolve(__dirname, `../../../images/full/${filename}.jpg`)
     )
