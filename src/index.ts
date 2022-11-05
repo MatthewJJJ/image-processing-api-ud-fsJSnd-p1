@@ -8,7 +8,7 @@ const logger = (
     req: express.Request,
     res: express.Response,
     next: Function
-) => {
+): void => {
     const log = req.protocol + '://' + req.get('host') + req.originalUrl;
     console.log('INFO:', 'Route Executed:', log);
 
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', middle, routes);
 
-app.listen(port, () => {
+app.listen(port, (): void => {
     console.log(`Image Processing API started on port: ${port}...`);
     console.log(
         `Make a request to http://localhost:${port}/ to confirm it is working...`
