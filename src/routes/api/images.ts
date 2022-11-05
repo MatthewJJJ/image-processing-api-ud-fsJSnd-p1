@@ -20,7 +20,7 @@ images.get('/', async (req, res) => {
     let identifier = `${filename}${width}x${height}`;
     if (!isValidInput) {
         res.send(
-            'No parameters given.  Please include a filename, width, and height...'
+            'Invalid parameters given.  Please include a filename, width, and height...'
         );
     } else if (fileNames.includes(identifier + '.jpg')) {
         console.log('Retrieving cached image...');
